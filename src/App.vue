@@ -19,7 +19,7 @@
 import CalculatorView from '@/views/CalculatorView.vue';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /**
  * Styles for the app layout:
  * - Full-screen height adjustment with padding.
@@ -29,11 +29,15 @@ import CalculatorView from '@/views/CalculatorView.vue';
 main {
   background: #c3c7cf url(/img/bg0.webp) repeat center center;
   width: 100%;
-  min-height: 100%;
   padding: 30px 15px 100px;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (min-width: 768px) {
+    height: 100vh;
+  }
 }
 </style>
