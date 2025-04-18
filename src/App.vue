@@ -31,7 +31,7 @@ main {
   width: 100%;
   min-height: 100%;
   padding: 30px 15px 100px;
-  height: calc(100vh - 108px);
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
