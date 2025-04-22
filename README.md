@@ -11,7 +11,6 @@ This project is a modern, modular implementation of a fee calculator for COPART 
 - 🧩 Componentized UI (atoms, molecules, organisms)
 - 📦 Built-in support for Lucide icons
 
-
 ## 📦 Installation
 
 ```bash
@@ -20,13 +19,11 @@ cd mapafees-calculator
 npm install
 ```
 
-
 ## 🛠️ Development
 
 ```bash
 npm run dev
 ```
-
 
 ## 🏗️ Build for Production
 
@@ -35,6 +32,7 @@ npm run build
 ```
 
 ## ✨ Code Formatting
+
 To format the code according to the Prettier configuration, run:
 
 ```bash
