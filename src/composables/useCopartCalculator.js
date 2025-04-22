@@ -1,7 +1,7 @@
 import {
   buyerFees,
   internetBidFees,
-  fixedFees,
+  getFixedFees,
   brokerFees,
 } from '@/data/feeRules';
 
@@ -40,19 +40,22 @@ export const useCopartCalculator = () => {
   };
 
   /**
-   * Calculates the Internet Bid Fee based on the bid amount.
-   * Some ranges apply a percentage on top of a fixed fee.
+   * Returns the Internet Bid Fee based on title type and vehicle type.
    *
-   * @param {number} amount - Bid value
-   * @returns {number} Internet bid fee including percent addition
+   * @param {number} amount - Bid amount
+   * @param {'salvage' | 'clean'} titleType - Vehicle title type
+   * @param {'light' | 'heavy'} vehicleType - Vehicle weight category
+   * @returns {number} The matching fee
    */
-  const getInternetBidFee = (amount) => {
-    const rule = internetBidFees.find(
-      (f) => amount >= f.min && amount <= f.max,
-    );
-    if (!rule) return 0;
-    const percentValue = amount * rule.percent;
-    return rule.fee + percentValue;
+  const getInternetBidFee = (
+    amount,
+    titleType = 'salvage',
+    vehicleType = 'light',
+  ) => {
+    const rules = internetBidFees?.[titleType]?.[vehicleType];
+    if (!rules) return 0;
+    const rule = rules.find((f) => amount >= f.min && amount <= f.max);
+    return rule ? rule.fee : 0;
   };
 
   /**
@@ -73,12 +76,13 @@ export const useCopartCalculator = () => {
     const vehicleType = options.vehicleType || 'light';
 
     const buyerFee = getBuyerFee(amount, titleType, vehicleType);
-    const internetFee = getInternetBidFee(amount);
-    const gateFee = fixedFees.gate;
-    const envFee = fixedFees.env;
-    const titleFee = fixedFees.title;
+    const internetFee = getInternetBidFee(amount, titleType, vehicleType);
     const brokerFee = getBrokerFee(amount);
-    const lateFee = options.latePayment ? fixedFees.late : 0; // Currently not in use
+    const { gate, env, title, late } = getFixedFees(titleType);
+    const gateFee = gate;
+    const envFee = env;
+    const titleFee = title;
+    const lateFee = options.latePayment ? late : 0;
 
     const total =
       amount + buyerFee + internetFee + gateFee + envFee + titleFee + brokerFee;
