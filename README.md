@@ -27,9 +27,15 @@ npm run dev
 
 ## 🏗️ Build for Production
 
+To generate the optimized production build:
+
 ```bash
-npm run build
+npm run build:prod
 ```
+
+This will output the final static files to the dist/ directory.
+
+> Note: When deploying to your hosting server, you should point to the mfc folder inside the root of mapafees.com, just copy the index.html and the assets folder to the destination folder.
 
 ## ✨ Code Formatting
 
@@ -99,7 +105,7 @@ const { calculateTotal } = useCopartCalculator();
 const result = calculateTotal(2500, {
   titleType: "salvage",
   vehicleType: "light",
-  latePayment: false,
+  latePayment: false, // optional
 });
 ```
 
