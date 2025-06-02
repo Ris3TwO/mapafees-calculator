@@ -75,14 +75,17 @@ export const useCopartCalculator = () => {
     const titleType = options.titleType || 'salvage';
     const vehicleType = options.vehicleType || 'light';
 
+    const preBuyerFeeAmount = amount + buyerFee + internetFee + gateFee + envFee;
+
     const buyerFee = getBuyerFee(amount, titleType, vehicleType);
     const internetFee = getInternetBidFee(amount, titleType, vehicleType);
-    const brokerFee = getBrokerFee(amount);
+    const brokerFee = getBrokerFee(preBuyerFeeAmount);
     const { gate, env, title, late } = getFixedFees(titleType);
     const gateFee = gate;
     const envFee = env;
     const titleFee = title;
-    const lateFee = options.latePayment ? late : 0;
+    const lateFee = options.latePayment ? late : 0; // Late payment surcharge fee
+
 
     const total =
       amount + buyerFee + internetFee + gateFee + envFee + titleFee + brokerFee;
